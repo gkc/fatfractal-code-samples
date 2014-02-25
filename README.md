@@ -3,7 +3,7 @@ fatfractal-code-samples
 You know, for FatFractal code samples
 
 ### DataImport
-1 Run up a FatFractal engine on your dev machine (see http://fatfractal.com/docs/getting-started/ )
+####1 Run up a FatFractal engine on your dev machine (see http://fatfractal.com/docs/getting-started/ )
 2 Deploy your app locally
 ```Bash
 cd DataImport
