@@ -16,7 +16,7 @@ We're going to Import the data from the [thing.json](DataImport/thing.json) file
 ```Bash
 curl -H "Content-Type: application/octet-stream" \
      --data @thing.json \
-     -u system:Tricky\!\$\%\&\*\(Password \
+     -u system:P4ssw0rd \
      http://localhost:8080/DataImport/ff/ext/simpleImport
 ```
 You should have seen output something like :
