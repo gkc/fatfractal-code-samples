@@ -1,0 +1,7 @@
+[
+{"guid":"abcdef1","aString":"This is abcdef1","aBoolean":true,"aNumber":12.345},
+{"guid":"abcdef2","aString":"This is abcdef2","aBoolean":true,"aNumber":12.345},
+{"guid":"abcdef3","aString":"This is abcdef3","aBoolean":true,"aNumber":12.345},
+{"guid":"abcdef4","aString":"This is abcdef4","aBoolean":true,"aNumber":12.345},
+{"guid":"abcdef5","aString":"This is abcdef5","aBoolean":true,"aNumber":12.345}
+]
