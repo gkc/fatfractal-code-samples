@@ -17,6 +17,10 @@ curl -H "Content-Type: application/octet-stream" \
      -u system:Tricky\!\$\%\&\*\(Password \
      http://localhost:8080/DataImport/ff/ext/simpleImport
 ```
+You should have seen output something like :
+```javascript
+{"result":{"extensionResponse":"Extension did not set a response"},"statusMessage":"Created 5 objects"}
+```
 * Let's see that data ...
 ```bash
 curl http://localhost:8080/DataImport/ff/resources/Thing 
