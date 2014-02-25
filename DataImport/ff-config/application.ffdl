@@ -1,0 +1,5 @@
+SET AllowSystemUserToLogin true
+SET SystemUserPassword Tricky!$%&*(Password
+
+CREATE EXTENSION /simpleImport as javascript:require('scripts/DataImport').simpleImport();
+
