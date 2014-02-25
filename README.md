@@ -14,7 +14,7 @@ ffef deploylocal
 curl -H "Content-Type: application/octet-stream" \
      --data @thing.json \
      -u system:Tricky\!\$\%\&\*\(Password \
-     http://localhost:8080/Samples/ff/ext/batchCreate
+     http://localhost:8080/DataImport/ff/ext/simpleImport
 ```
 > Note: Always use https in production
 
