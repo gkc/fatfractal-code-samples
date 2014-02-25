@@ -21,7 +21,7 @@ curl -H "Content-Type: application/octet-stream" \
 ```
 You should have seen output something like :
 ```javascript
-{"result":{"extensionResponse":"Extension did not set a response"},"statusMessage":"Created 5 objects"}
+{"result":{"extensionResponse":"Extension did not set a response"},"statusMessage":"Added 0 new objects; ignored 5 which already existed"}
 ```
 #### Let's see that data ...
 ```bash

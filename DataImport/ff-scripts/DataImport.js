@@ -18,6 +18,7 @@ exports.simpleImport = function() {
     var data = JSON.parse(jsonString);
 
     var numCreated = 0;
+    var numIgnored = 0;
     for (var i = 0; i < data.length; i++) {
         var objToCreate = data[i];
 
@@ -34,6 +35,7 @@ exports.simpleImport = function() {
         var collectionName = "/Thing";
         if (ff.getObjFromUri(collectionName + "/" + objToCreate.guid)) {
             ff.logger.forceInfo("Object with guid " + objToCreate.guid + " already exists in collection " + collectionName);
+            numIgnored++;
             continue;
         }
 
@@ -42,6 +44,6 @@ exports.simpleImport = function() {
         numCreated++;
     }
 
-    ff.response().statusMessage = "Created " + numCreated + " objects";
+    ff.response().statusMessage = "Added " + numCreated + " new objects; ignored " + numIgnored + " which already existed";
 };
 
