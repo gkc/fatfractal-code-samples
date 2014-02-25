@@ -9,12 +9,19 @@ You know, for FatFractal code samples
 cd DataImport
 ffef deploylocal
 ```
-* Do an import
+* Import the data from the "thing.json" file using the "simpleImport" extension
+** NB: We're using http here, for convenience. ALWAYS use https when talking to the internet
 ```Bash
 curl -H "Content-Type: application/octet-stream" \
      --data @thing.json \
      -u system:Tricky\!\$\%\&\*\(Password \
      http://localhost:8080/DataImport/ff/ext/simpleImport
 ```
-> Note: Always use https in production
-
+* Let's see that data ...
+```bash
+curl http://localhost:8080/DataImport/ff/resources/Thing 
+```
+I recently discovered https://github.com/ddopson/underscore-cli, so now I can do this - thank you Dave Dopson
+```bash
+curl http://localhost:8080/DataImport/ff/resources/Thing | underscore print --outfmt pretty
+```
