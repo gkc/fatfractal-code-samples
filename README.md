@@ -5,12 +5,12 @@ You know, for FatFractal code samples
 ## DataImport
 #### Run up a FatFractal engine on your dev machine
 ( see http://fatfractal.com/docs/getting-started/ )
-#### Deploy your app locally
+#### Deploy this sample locally
 ```Bash
 cd DataImport
 ffef deploylocal
 ```
-#### Import the data from the "thing.json" file using the "simpleImport" extension
+#### Import the data from the "thing.json" file using the [simpleImport](DataImport/ff-scripts/DataImport.js#L7) extension
 ** NB: We're using http here, for convenience. ALWAYS use https when talking to the internet
 ```Bash
 curl -H "Content-Type: application/octet-stream" \
