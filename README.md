@@ -2,15 +2,15 @@ fatfractal-code-samples
 =======================
 You know, for FatFractal code samples
 
-### DataImport
-#####* Run up a FatFractal engine on your dev machine
+## DataImport
+#### Run up a FatFractal engine on your dev machine
 ( see http://fatfractal.com/docs/getting-started/ )
-#####* Deploy your app locally
+#### Deploy your app locally
 ```Bash
 cd DataImport
 ffef deploylocal
 ```
-#####* Import the data from the "thing.json" file using the "simpleImport" extension
+#### Import the data from the "thing.json" file using the "simpleImport" extension
 ** NB: We're using http here, for convenience. ALWAYS use https when talking to the internet
 ```Bash
 curl -H "Content-Type: application/octet-stream" \
@@ -22,7 +22,7 @@ You should have seen output something like :
 ```javascript
 {"result":{"extensionResponse":"Extension did not set a response"},"statusMessage":"Created 5 objects"}
 ```
-#####* Let's see that data ...
+#### Let's see that data ...
 ```bash
 curl http://localhost:8080/DataImport/ff/resources/Thing 
 ```
