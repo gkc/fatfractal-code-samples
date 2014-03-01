@@ -148,6 +148,9 @@
 
 - (void)fetchChangesFromBackend {
     // Fetch any events that have been updated on the backend
+    // Guide to query language is here: http://fatfractal.com/prod/docs/queries/
+    // and full syntax reference here: http://fatfractal.com/prod/docs/reference/#query-language
+    // Note use of the "depthGb" parameter - see here: http://fatfractal.com/prod/docs/queries/#retrieving-related-objects-inline
     NSString *queryString = [NSString stringWithFormat:@"/APLEvent/(createdBy eq '%@' and updatedAt gt %@)?depthGb=1", self.ffInstance.loggedInUserGuid, self.lastRefreshTime];
     [[[self.ffInstance newReadRequest] prepareGetFromCollection:queryString] executeAsyncWithBlock:^(FFReadResponse *response) {
         NSArray *retrieved = response.objs;
