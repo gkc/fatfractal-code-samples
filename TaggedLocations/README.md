@@ -16,12 +16,12 @@ I've made some simple modifications to
 #### Overview of the mods to the original Apple sample code:
 * Let the FatFractal SDK know how to handle your CoreData objects, by creating a [custom FatFractal subclass](TaggedLocations/APLAppDelegate.m#L58-L94) and [modifying the AppDelegate to create an instance of it](TaggedLocations/APLAppDelegate.m#L147-L160)
     * This is the code that holds everything together. We're over-riding
-```Objective-C
+    ```Objective-C
     - (id) createInstanceOfClass:(Class) class forObjectWithMetaData:(FFMetaData *)objMetaData
-```
+    ```
     * so that when the FatFractal SDK needs to create an instance of one of your objects, then you can control how that's done.
     * In this example, then if it's an NSManagedObject subclass, we're first checking to see if we already have that object locally, and if not then we're calling the appropriate CoreData initializer.
-```Objective-C
+    ```Objective-C
         - (id) createInstanceOfClass:(Class) class forObjectWithMetaData:(FFMetaData *)objMetaData {
             if ([class isSubclassOfClass:[NSManagedObject class]]) {
                 id obj = [self findExistingObjectWithClass:class andFFUrl:objMetaData.ffUrl];
@@ -37,7 +37,7 @@ I've made some simple modifications to
                 return [[class alloc] init]; // You MUST provide this as a default
             }
         }
-```
+    ```
 * Added an 'ffUrl' property to [APLEvent](TaggedLocations/APLEvent.h#L55) and [APLTag](TaggedLocations/APLTag.h#L55)
     * While not the only way, this is the simplest way possible to handle both the 'unique id' issue as well as allowing FatFractal's object REFERENCEs to work seamlessly
 * Changed the name of the 'creationDate' property in APLEvent (and the core data model) to 'createdAt' (which is one of FatFractal's default built-in metadata attributes)
