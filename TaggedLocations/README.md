@@ -19,7 +19,25 @@ I've made some simple modifications to
     ```Objective-C
     - (id) createInstanceOfClass:(Class) class forObjectWithMetaData:(FFMetaData *)objMetaData
     ```
-      so that when the FatFractal SDK needs to create an instance of one of your objects, then you can control how that's done. If it's an NSManagedObject subclass, then we're first checking to see if we already have that object locally, and if not then we're calling the appropriate CoreData initializer.
+    * so that when the FatFractal SDK needs to create an instance of one of your objects, then you can control how that's done.
+    * In this example, then if it's an NSManagedObject subclass, we're first checking to see if we already have that object locally, and if not then we're calling the appropriate CoreData initializer.
+        ```Objective-C
+        - (id) createInstanceOfClass:(Class) class forObjectWithMetaData:(FFMetaData *)objMetaData {
+            if ([class isSubclassOfClass:[NSManagedObject class]]) {
+                id obj = [self findExistingObjectWithClass:class andFFUrl:objMetaData.ffUrl];
+                if (obj) {
+                    NSLog(@"Found existing %@ object with ffUrl %@ in managed context", NSStringFromClass(class), objMetaData.ffUrl);
+                    return obj;
+                } else {
+                    NSLog(@"Inserting new %@ object with ffUrl %@ into managed context", NSStringFromClass(class), objMetaData.ffUrl);
+                    return [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass(class)
+                                                         inManagedObjectContext:self.managedObjectContext];
+                }
+            } else {
+                return [[class alloc] init]; // You MUST provide this as a default
+            }
+        }
+        ```
 * Added an 'ffUrl' property to [APLEvent](TaggedLocations/APLEvent.h#L55) and [APLTag](TaggedLocations/APLTag.h#L55)
     * While not the only way, this is the simplest way possible to handle both the 'unique id' issue as well as allowing FatFractal's object REFERENCEs to work seamlessly
 * Changed the name of the 'creationDate' property in APLEvent (and the core data model) to 'createdAt' (which is one of FatFractal's default built-in metadata attributes)
