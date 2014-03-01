@@ -12,7 +12,7 @@ ffef deploylocal
 The app is simple - it allows the user to create "events" and tag them, and stores all data on the device using CoreData. The original ReadMe is [here](ReadMe.txt)
 
 I've made some simple modifications to
-* Also store all of the user's events in a FatFractal backend
+* Also store all of the user's events, along with all of the tagsm in a FatFractal backend
 * 'sync' the user's events when the app starts up, by retrieving any events that have been modified, for example on another device
 
 #### Overview of the mods to the original Apple sample code:
@@ -42,10 +42,17 @@ I've made some simple modifications to
     ```
 * Added an 'ffUrl' property to [APLEvent](TaggedLocations/APLEvent.h#L55) and [APLTag](TaggedLocations/APLTag.h#L55)
     * While not the only way, this is the simplest way possible to handle both the 'unique id' issue as well as allowing FatFractal's object REFERENCEs to work seamlessly
+
 * Changed the name of the 'creationDate' property in APLEvent (and the core data model) to 'createdAt' (which is one of FatFractal's default built-in metadata attributes)
+
 * Modified [APLEventsTableViewController](TaggedLocations/APLEventsTableViewController.m#L199-L205) so it first fetches from the CoreData store on the device, and [then from the FatFractal backend](TaggedLocations/APLEventsTableViewController.m#L149-L188)
     * I've also added a 'lastRefreshDate' property, stored locally in NSUserDefaults, to limit the data that is pulled from the backend
+
 * Added code to [create](TaggedLocations/APLEventsTableViewController.m#L419-L433) or [update](TaggedLocations/APLEventsTableViewController.m#L405-L419) an event on the backend as required
+
 * Added code to [delete an event](TaggedLocations/APLEventsTableViewController.m#L286) from the FatFractal backend (uses 'queueing' for this so if your app is offline, the delete will be processed when it reconnects)
+
 * Adding basic ['login'](TaggedLocations/APLEvent.h#L58) functionality
+
 * Similarly, APLTagSelectionController will [fetch tags from the backend](TaggedLocations/APLTagSelectionController.m#L125-L157), [create](TaggedLocations/APLTagSelectionController.m#L443), [update](TaggedLocations/APLTagSelectionController.m#L429) and [delete](TaggedLocations/APLTagSelectionController.m#L320) tags, and [add](TaggedLocations/APLTagSelectionController.m#L404) or [remove](TaggedLocations/APLTagSelectionController.m#L399) a tag from an event.
+    * Note also the "- (BOOL)shouldSerialize" method on both APLEvent and APLTag - in this example, a many-to-many example, we don't wish to serialize that relationship - instead we are using FatFractal's "grab-bag" methods.
