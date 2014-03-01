@@ -1,4 +1,6 @@
 ## TaggedLocations
+Apple's 'TaggedLocations' CoreData [sample application](https://developer.apple.com/library/ios/samplecode/TaggedLocations/Introduction/Intro.html), modified to use FatFractal as its cloud backend.
+
 #### Run up a FatFractal engine on your dev machine
 ( see http://fatfractal.com/docs/getting-started/ )
 #### Deploy this sample locally
