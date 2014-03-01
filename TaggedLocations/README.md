@@ -15,6 +15,7 @@ I've made some simple modifications to
 
 #### Overview of the mods to the original Apple sample code:
 * Let the FatFractal SDK know how to handle your CoreData objects, by creating a [custom FatFractal subclass](TaggedLocations/APLAppDelegate.m#L58-L94) and [modifying the AppDelegate to create an instance of it](TaggedLocations/APLAppDelegate.m#L147-L160)
+
 ** This is the code that holds everything together. We're over-riding
 ```Objective-C
 - (id) createInstanceOfClass:(Class) class forObjectWithMetaData:(FFMetaData *)objMetaData
