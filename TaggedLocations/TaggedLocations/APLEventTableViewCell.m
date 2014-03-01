@@ -77,31 +77,31 @@
 
 - (void)configureWithEvent:(APLEvent *)event
 {
-	self.nameField.text = event.name;
-	
-	self.creationDateLabel.text = [self.dateFormatter stringFromDate:[event createdAt]];
-	
-	NSString *string = [NSString stringWithFormat:@"%@, %@",
-						[self.numberFormatter stringFromNumber:[event latitude]],
-						[self.numberFormatter stringFromNumber:[event longitude]]];
+    self.nameField.text = event.name;
+    
+    self.creationDateLabel.text = [self.dateFormatter stringFromDate:[event createdAt]];
+    
+    NSString *string = [NSString stringWithFormat:@"%@, %@",
+                        [self.numberFormatter stringFromNumber:[event latitude]],
+                        [self.numberFormatter stringFromNumber:[event longitude]]];
     self.locationLabel.text = string;
     
-	NSMutableArray *eventTagNames = [NSMutableArray new];
-	for (APLTag *tag in event.tags) {
-		[eventTagNames addObject:tag.name];
-	}
-	
-	NSString *tagsString = @"";
-	if ([eventTagNames count] > 0) {
-		tagsString = [eventTagNames componentsJoinedByString:@", "];
-	}
-	self.tagsField.text = tagsString;
+    NSMutableArray *eventTagNames = [NSMutableArray new];
+    for (APLTag *tag in event.tags) {
+        [eventTagNames addObject:tag.name];
+    }
+    
+    NSString *tagsString = @"";
+    if ([eventTagNames count] > 0) {
+        tagsString = [eventTagNames componentsJoinedByString:@", "];
+    }
+    self.tagsField.text = tagsString;
 }
 
 
 - (BOOL)makeNameFieldFirstResponder
 {
-	return [self.nameField becomeFirstResponder];
+    return [self.nameField becomeFirstResponder];
 }
 
 
@@ -117,27 +117,27 @@
  
 - (void)willTransitionToState:(UITableViewCellStateMask)state
 {
-	[super willTransitionToState:state];
-	
-	if (state & UITableViewCellStateEditingMask) {
-		self.locationLabel.hidden = YES;
-		self.nameField.enabled = YES;
-		self.tagsButton.hidden = NO;
-		self.tagsField.placeholder = NSLocalizedString(@"Tap to edit tags", @"Text for tags field in main table view cell");
-	}
+    [super willTransitionToState:state];
+    
+    if (state & UITableViewCellStateEditingMask) {
+        self.locationLabel.hidden = YES;
+        self.nameField.enabled = YES;
+        self.tagsButton.hidden = NO;
+        self.tagsField.placeholder = NSLocalizedString(@"Tap to edit tags", @"Text for tags field in main table view cell");
+    }
 }
 
 
 - (void)didTransitionToState:(UITableViewCellStateMask)state
 {
-	[super didTransitionToState:state];
-	
-	if (!(state & UITableViewCellStateEditingMask)) {
-		self.locationLabel.hidden = NO;
-		self.nameField.enabled = NO;
-		self.tagsButton.hidden = YES;
-		self.tagsField.placeholder = @"";
-	}
+    [super didTransitionToState:state];
+    
+    if (!(state & UITableViewCellStateEditingMask)) {
+        self.locationLabel.hidden = NO;
+        self.nameField.enabled = NO;
+        self.tagsButton.hidden = YES;
+        self.tagsField.placeholder = @"";
+    }
 }
 
 #pragma mark - Internationalization
@@ -167,11 +167,11 @@ static NSDateFormatter *sDateFormatter = nil;
 
 + (NSDateFormatter *)dateFormatter
 {
-	if (sDateFormatter == nil) {
-		sDateFormatter = [[NSDateFormatter alloc] init];
-		[sDateFormatter setTimeStyle:NSDateFormatterShortStyle];
-		[sDateFormatter setDateStyle:NSDateFormatterMediumStyle];
-	}
+    if (sDateFormatter == nil) {
+        sDateFormatter = [[NSDateFormatter alloc] init];
+        [sDateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        [sDateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    }
     return sDateFormatter;
 }
 
@@ -186,11 +186,11 @@ static NSNumberFormatter *sNumberFormatter = nil;
 
 + (NSNumberFormatter *)numberFormatter
 {
-	if (sNumberFormatter == nil) {
-		sNumberFormatter = [[NSNumberFormatter alloc] init];
-		[sNumberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-		[sNumberFormatter setMaximumFractionDigits:3];
-	}
+    if (sNumberFormatter == nil) {
+        sNumberFormatter = [[NSNumberFormatter alloc] init];
+        [sNumberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        [sNumberFormatter setMaximumFractionDigits:3];
+    }
     return sNumberFormatter;
 }
 

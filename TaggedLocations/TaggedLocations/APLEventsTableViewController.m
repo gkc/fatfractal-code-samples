@@ -120,30 +120,30 @@
 
 #pragma mark - data fetch
 - (void)fetchEventsFromCoreData {
-	/*
-	 Fetch existing events.
-	 Create a fetch request for the Event entity; add a sort descriptor; then execute the fetch.
-	 */
-	NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"APLEvent"];
-	[request setFetchBatchSize:20];
+    /*
+     Fetch existing events.
+     Create a fetch request for the Event entity; add a sort descriptor; then execute the fetch.
+     */
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"APLEvent"];
+    [request setFetchBatchSize:20];
     
-	// Order the events by creation date, most recent first.
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
-	NSArray *sortDescriptors = @[sortDescriptor];
-	[request setSortDescriptors:sortDescriptors];
-	
-	// Execute the fetch.
-	NSError *error;
-	NSArray *fetchResults = [self.managedObjectContext executeFetchRequest:request error:&error];
-	if (fetchResults == nil) {
+    // Order the events by creation date, most recent first.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt" ascending:NO];
+    NSArray *sortDescriptors = @[sortDescriptor];
+    [request setSortDescriptors:sortDescriptors];
+    
+    // Execute the fetch.
+    NSError *error;
+    NSArray *fetchResults = [self.managedObjectContext executeFetchRequest:request error:&error];
+    if (fetchResults == nil) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
-	}
+    }
 
-	// Set self's events array to a mutable copy of the fetch results.
-	[self setEventsArray:[fetchResults mutableCopy]];
+    // Set self's events array to a mutable copy of the fetch results.
+    [self setEventsArray:[fetchResults mutableCopy]];
 }
 
 - (void)fetchChangesFromBackend {
@@ -190,7 +190,7 @@
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
-{	
+{    
     [super viewDidLoad];
 
     // Configure the add and edit buttons.
@@ -218,17 +218,17 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	[self.tableView reloadData];
+    [self.tableView reloadData];
 
-	// Start the location manager.
-	[self.locationManager startUpdatingLocation];
+    // Start the location manager.
+    [self.locationManager startUpdatingLocation];
 }
 
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-	[super viewDidDisappear:animated];
-	self.locationManager = nil;
+    [super viewDidDisappear:animated];
+    self.locationManager = nil;
 }
 
 
@@ -242,14 +242,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	// There is only one section.
+    // There is only one section.
     return 1;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	// There are as many rows as there are obects in the events array.
+    // There are as many rows as there are obects in the events array.
     return [self.eventsArray count];
 }
 
@@ -261,11 +261,11 @@
     APLEventTableViewCell *cell = (APLEventTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell.delegate = self;
 
-	// Get the event corresponding to the current index path and configure the table view cell.
-	APLEvent *event = (APLEvent *)self.eventsArray[indexPath.row];
+    // Get the event corresponding to the current index path and configure the table view cell.
+    APLEvent *event = (APLEvent *)self.eventsArray[indexPath.row];
     [cell configureWithEvent:event];
     
-	return cell;
+    return cell;
 }
 
 
@@ -277,27 +277,27 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-		
-		// Ensure that if the user is editing a name field then the change is committed before deleting a row -- this ensures that changes are made to the correct event object.
-		[tableView endEditing:YES];
-		
+        
+        // Ensure that if the user is editing a name field then the change is committed before deleting a row -- this ensures that changes are made to the correct event object.
+        [tableView endEditing:YES];
+        
         // Delete the managed object at the given index path.
-		NSManagedObject *eventToDelete = (self.eventsArray)[indexPath.row];
+        NSManagedObject *eventToDelete = (self.eventsArray)[indexPath.row];
         [self.ffInstance queueDeleteObj:eventToDelete];
-		[self.managedObjectContext deleteObject:eventToDelete];
-		
-		// Update the array and table view.
+        [self.managedObjectContext deleteObject:eventToDelete];
+        
+        // Update the array and table view.
         [self.eventsArray removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-		
-		// Commit the change.
-		NSError *error;
-		if (![self.managedObjectContext save:&error]) {
+        
+        // Commit the change.
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
-		}
+        }
     }
 }
 
@@ -305,7 +305,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
-	self.navigationItem.rightBarButtonItem.enabled = !editing;
+    self.navigationItem.rightBarButtonItem.enabled = !editing;
 }
 
 
@@ -331,10 +331,10 @@
  Add an event.
  */
 - (IBAction)addEvent:(id)sender
-{	
-	// If it's not possible to get a location, then return.
-	CLLocation *location = [self.locationManager location];
-	if (!location) {
+{    
+    // If it's not possible to get a location, then return.
+    CLLocation *location = [self.locationManager location];
+    if (!location) {
 #ifdef DEBUG
         CLLocationDegrees latitude = random() * 720.0 / INT32_MAX  - 360.0;;
         CLLocationDegrees longitude = random() * 720.0 / INT32_MAX  - 360.0;;
@@ -342,41 +342,41 @@
 #else
         return;
 #endif
-	}
-	
-	/*
-	 Create a new instance of the Event entity.
-	 */
-	APLEvent *event = (APLEvent *)[NSEntityDescription insertNewObjectForEntityForName:@"APLEvent" inManagedObjectContext:self.managedObjectContext];
-	
-	// Configure the new event with information from the location.
+    }
+    
+    /*
+     Create a new instance of the Event entity.
+     */
+    APLEvent *event = (APLEvent *)[NSEntityDescription insertNewObjectForEntityForName:@"APLEvent" inManagedObjectContext:self.managedObjectContext];
+    
+    // Configure the new event with information from the location.
     event.createdAt = location.timestamp;
-	CLLocationCoordinate2D coordinate = location.coordinate;
-	event.latitude = @(coordinate.latitude);
-	event.longitude = @(coordinate.longitude);
-	
-	/*
-	 Because this is a new event, and events are displayed with most recent events at the top of the list, add the new event to the beginning of the events array, then:
-	 * Add a new row to the table view
-	 * Scroll to make the row visible
-	 * Start editing the name field
-	 */
+    CLLocationCoordinate2D coordinate = location.coordinate;
+    event.latitude = @(coordinate.latitude);
+    event.longitude = @(coordinate.longitude);
+    
+    /*
+     Because this is a new event, and events are displayed with most recent events at the top of the list, add the new event to the beginning of the events array, then:
+     * Add a new row to the table view
+     * Scroll to make the row visible
+     * Start editing the name field
+     */
     [self.eventsArray insertObject:event atIndex:0];
-	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-	
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-	
-	[self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 
-	[self setEditing:YES animated:YES];
-	APLEventTableViewCell *cell = (APLEventTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-	[cell makeNameFieldFirstResponder];
-	
-	/*
-	 Don't save yet -- the name is not optional:
-	 * The user should add a name before the event is saved.
-	 * If the user doesn't add a name, it will be set to @"" when they press Done.
-	 */
+    [self setEditing:YES animated:YES];
+    APLEventTableViewCell *cell = (APLEventTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [cell makeNameFieldFirstResponder];
+    
+    /*
+     Don't save yet -- the name is not optional:
+     * The user should add a name before the event is saved.
+     * If the user doesn't add a name, it will be set to @"" when they press Done.
+     */
 }
 
 - (void)showError:(NSError *)error {
@@ -396,10 +396,10 @@
     point = [self.tableView convertPoint:point fromView:textField];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
     
-	APLEvent *event = (self.eventsArray)[indexPath.row];
-	event.name = textField.text;
+    APLEvent *event = (self.eventsArray)[indexPath.row];
+    event.name = textField.text;
 
-	// Commit the change.
+    // Commit the change.
     if (! self.eventBeingSaved) {
         self.eventBeingSaved = event;
         if (event.ffUrl) {
@@ -433,23 +433,23 @@
         }
     }
 
-	return YES;
+    return YES;
 }
 
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-	/*
+    /*
      Ensure that a text field for a row for a newly-inserted object is disabled when the user finishes editing.
-	 */
+     */
     textField.enabled = self.editing;
 }
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-	[textField resignFirstResponder];
-	return YES;	
+    [textField resignFirstResponder];
+    return YES;    
 }
 
 
@@ -461,14 +461,14 @@
 - (CLLocationManager *)locationManager
 {
     if (_locationManager != nil) {
-		return _locationManager;
-	}
+        return _locationManager;
+    }
 
-	_locationManager = [[CLLocationManager alloc] init];
-	[_locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
-	[_locationManager setDelegate:self];
+    _locationManager = [[CLLocationManager alloc] init];
+    [_locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+    [_locationManager setDelegate:self];
 
-	return _locationManager;
+    return _locationManager;
 }
 
 
@@ -480,8 +480,8 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     if (!self.editing) {
-		self.addButton.enabled = YES;
-	}
+        self.addButton.enabled = YES;
+    }
 }
 
 
