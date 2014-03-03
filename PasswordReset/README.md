@@ -1,7 +1,7 @@
 # Password Reset sample code
 
 ## Here we illustrate:
-* How appropriately authorized users can generate password reset requests
+* How users can generate password reset requests
 * A simple, parameterized password reset form
 * How to send a simple email with a link to the password reset form
 
