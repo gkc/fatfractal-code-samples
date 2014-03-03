@@ -128,7 +128,7 @@ exports.createTestUser = function() {
         throw "You must supply an email address";
 
     var user = ff.getObjFromUri("/FFUser/(email eq '" + emailAndUserName + "')");
-    if (user) ff.deleteObj(user);
+    if (user) throw {statusCode:409, statusMessage:'User with this email address already exists'};
 
     user = ff.registerUser({clazz:'FFUser',userName:emailAndUserName,email:emailAndUserName}, "Password1", true, false);
 
