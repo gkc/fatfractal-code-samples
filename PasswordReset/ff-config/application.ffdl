@@ -1,0 +1,23 @@
+#
+# An object-type and a collection to hold password reset tokens
+# Only allow the system user, or members of the system.admins group, to create, retrieve, update or delete password reset tokens
+#
+CREATE OBJECTTYPE PasswordResetToken (userGuid STRING)
+CREATE COLLECTION /PasswordResetToken OBJECTTYPE PasswordResetToken
+PERMIT create:system.admins read:system.admins write:system.admins ON /PasswordResetToken
+
+#
+# Make an easy way for the system user to send a password reset token
+#
+CREATE EXTENSION /sendPasswordReset AS javascript:require ('scripts/PasswordReset.js').sendPasswordResetToken();
+
+#
+# The actual password reset extension is UNSECURED because, well, the user is probably not able to log in right now
+#
+CREATE EXTENSION /resetPassword        UNSECURED AS javascript:require ('scripts/PasswordReset.js').resetPassword();
+
+#
+# Obviously this would not be left in place for production but it's useful for demonstration purposes
+#
+CREATE EXTENSION /createTestUser       UNSECURED AS javascript:require ('scripts/PasswordReset.js').createTestUser();
+
