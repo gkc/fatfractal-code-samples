@@ -12,13 +12,13 @@ var smtpHost = null;                                 // Remove me
 // var smtpPassword = "your_smtp_password";          // Uncomment and change me
 var fromName = "[[ My Beautiful App ]]";             // Change me
 
-function _sendPasswordResetToken(userGuid) {
+function _sendPasswordResetToken(email) {
     if (! smtpHost) throw {statusCode:500, statusMessage:"You need to configure this code"};
 
     // We need to find the user with that guid
-    var user = ff.getObjFromUri("/FFUser/" + userGuid);
+    var user = ff.getObjFromUri("/FFUser/(email eq '" + email + "')");
     if (! user) {
-        throw {statusCode:404,statusMessage:"sendPasswordResetToken: Could not find user with guid " + userGuid};
+        throw {statusCode:404,statusMessage:"sendPasswordResetToken: Could not find user with email " + email};
     }
 
     // Now create an object in /PasswordResetToken
@@ -50,13 +50,13 @@ exports.sendPasswordResetToken = function() {
 
     var data = ff.getExtensionRequestData();
 
-    // We need a userGuid parameter
-    var userGuid = data.httpParameters['userGuid'];
-    if (! userGuid || userGuid === null || userGuid == '') {
-        throw {statusCode:400, statusMessage:"sendPasswordResetToken: userGuid parameter must be supplied"};
+    // We need an email address
+    var email = data.httpParameters['email'];
+    if (! email || email === null || email == '') {
+        throw {statusCode:400, statusMessage:"sendPasswordResetToken: email parameter must be supplied"};
     }
 
-    _sendPasswordResetToken(userGuid);
+    _sendPasswordResetToken(email);
 };
 
 exports.resetPassword= function() {
@@ -132,6 +132,6 @@ exports.createTestUser = function() {
 
     user = ff.registerUser({clazz:'FFUser',userName:emailAndUserName,email:emailAndUserName}, "Password1", true, false);
 
-    _sendPasswordResetToken(user.guid);
+    _sendPasswordResetToken(user.email);
 };
 

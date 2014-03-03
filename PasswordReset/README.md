@@ -17,10 +17,13 @@ cd /path/to/fatfractal-code-samples/PasswordReset
 ffef deploylocal
 ```
 
-
 * Create a test user
 ```Bash
 curl "http://localhost:8080/PasswordReset/ff/ext/createTestUser?email=your_email_address@example.com"
 ```
 
+* Request a password reset for that user
+```Bash
+curl "http://localhost:8080/PasswordReset/ff/ext/sendPasswordReset?email=your_email_address@example.com"
+```
 

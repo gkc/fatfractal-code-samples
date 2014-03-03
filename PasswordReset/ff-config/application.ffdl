@@ -7,12 +7,12 @@ CREATE COLLECTION /PasswordResetToken OBJECTTYPE PasswordResetToken
 PERMIT create:system.admins read:system.admins write:system.admins ON /PasswordResetToken
 
 #
-# Make an easy way for the system user to send a password reset token
+# Give a user the ability to reset their passwords. Method is UNSECURED, so anyone can request a password reset
 #
-CREATE EXTENSION /sendPasswordReset AS javascript:require ('scripts/PasswordReset.js').sendPasswordResetToken();
+CREATE EXTENSION /sendPasswordReset    UNSECURED AS javascript:require ('scripts/PasswordReset.js').sendPasswordResetToken();
 
 #
-# The actual password reset extension is UNSECURED because, well, the user is probably not able to log in right now
+# The actual password reset extension is UNSECURED because
 #
 CREATE EXTENSION /resetPassword        UNSECURED AS javascript:require ('scripts/PasswordReset.js').resetPassword();
 
