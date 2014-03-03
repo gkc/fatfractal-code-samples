@@ -23,6 +23,7 @@ curl "http://localhost:8080/PasswordReset/ff/ext/createTestUser?email=your_email
 ```
 
 * Request a password reset for that user
+    * This will send an email with a link to the password reset form
 ```Bash
 curl "http://localhost:8080/PasswordReset/ff/ext/sendPasswordReset?email=your_email_address@example.com"
 ```
